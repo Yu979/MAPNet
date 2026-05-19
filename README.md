@@ -13,8 +13,8 @@ conda activate MAPNet
 
 ## Model Files
 
-we provide the trained MAPNet for direct usage.
-[Download model weights:](https://drive.google.com/file/d/1gbAJWpSyh1Iy-jVLHpTOmvdY3RlIlqr-/view?usp=sharing)
+We provide the trained MAPNet for direct usage.
+[Download model weights](https://drive.google.com/file/d/1gbAJWpSyh1Iy-jVLHpTOmvdY3RlIlqr-/view?usp=sharing)
 
 Please place the checkpoint in `checkpoints/model.pt`.
 
