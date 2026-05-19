@@ -1,0 +1,77 @@
+# Data configuration
+data:
+  adamantane_smiles: "C1C2CC3CC1CC(C2)C3"
+  sequence_prefix: "Ada-"
+  use_both_replicates: false  # Whether to use both replicate measurements in the training set
+  
+  max_mol_len: 50
+  max_prot_len: 30
+  
+  # Data split
+  split:
+    test_size: 0.2  # Validation set ratio
+    n_bins: 10  # Number of stratification bins
+
+# Model configuration
+model:
+  mol_model_name: "ibm/MoLFormer-XL-both-10pct"
+  prot_model_name: "facebook/esm2_t33_650M_UR50D"
+  local_files_only: false
+  fusion_dim: 128
+  n_transformer_layers: 2
+  n_heads: 4
+  
+  # Small-molecule embedding strategy
+  mol_embedding:
+    type: "attention"  # Options: "mean", "cls", "max", "attention"
+    use_projection: true
+    
+  # Protein embedding strategy
+  prot_embedding:
+    type: "transformer"  # Options: "mean", "max", "attention", "transformer"
+    use_projection: true
+  
+  # Fusion strategy
+  fusion:
+    type: "transformer" 
+    
+  # Pooling method
+  pooling:
+    type: "attention"  # Options: "attention", "mean", "max", "max_mean"
+  
+  # Prediction head
+  regressor:
+    hidden_dims: [128, 64]
+    dropout: 0.3
+    activation: "gelu"  # Options: "relu", "gelu", "tanh"
+
+# Training configuration
+training:
+  batch_size: 16
+  learning_rate: 7.0e-5
+  num_epochs: 79
+  optimizer: "adamw"  # Options: "adamw", "adam", "sgd"
+  scheduler: "plateau" # Options: "cosine", "step", "plateau"
+  
+  # Loss function
+  loss:
+    type: "huber"  # Options: "mse", "mae", "huber", "smooth_l1", "weighted_mse"
+    params:
+      delta: 0.1  # for huber loss
+
+  scheduler_params:
+    mode: "min"          # Monitored objective; 'min' means lower validation loss is better
+    factor: 0.5          # Learning-rate decay factor
+    patience: 8          # Number of epochs to wait before adjusting the learning rate
+    threshold: 1.0e-4 
+
+  
+# Device configuration
+device:
+  cuda_visible_devices: "1"
+  use_multi_gpu: false
+
+# Other configuration
+seed: 42
+save_dir: "./checkpoints"
+log_dir: "./logs"

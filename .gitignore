@@ -216,3 +216,27 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# MAPNet local data and generated artifacts
+data/
+checkpoints/
+logs/
+runs/
+wandb/
+tensorboard/
+generated_peptides*.txt
+
+# Model weights and serialized experiment outputs
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.pkl
+*.pickle
+*.npy
+*.npz
+
+# Local machine and editor metadata
+.DS_Store
+.idea/
+.vscode/
